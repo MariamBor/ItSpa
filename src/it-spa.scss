@@ -174,6 +174,31 @@ main {
             display: grid;
             grid-template-columns: repeat(2, 1fr);
         }
+
+        .add-to-cart {
+            background: transparent;
+            border    : 1px solid #444;
+            border-radius: 100px;
+            color     : #444;
+        }
+        .arrival-date,
+        .departure-date {
+            background: transparent;
+            border    : 1px solid #444;
+            border-radius: 100px;
+            color     : #444;
+        }
+
+        .room-photo-buttons {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .room-buttons {
+            display: flex;
+            justify-content: space-between;
+            align-items: end;
+        }
     }
     
 }
