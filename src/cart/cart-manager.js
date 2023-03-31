@@ -10,7 +10,7 @@ export const cartManager = {
 
     if (cart === null) {
       content = {
-        [item.name]: { price: item.price, quantity: 1 }
+        [item.name]: { price: item.price, quantity: 1, dates: [item.arrivalDate, item.departureDate] }
       };
     }
     else {
@@ -20,16 +20,22 @@ export const cartManager = {
       // if (content.hasOwnProperty(item.name))
       if (item.name in content) {
         content[item.name].quantity += 1;
+        content[item.name].dates.push(item.arrivalDate);
+        content[item.name].dates.push(item.departureDate);
       }
       else {
         const newItem = {
-          [item.name]: { price: item.price, quantity: 1 }
+          [item.name]: { price: item.price, quantity: 1, dates: [item.arrivalDate, item.departureDate] }
         };
 
         // doklada nowy wpis (klucz: wartosc) do obiektu `content`
+        if (content) {
         Object.assign(content, newItem);
+      } else {
+        content = newItem;
       }
     }
+  }
     
     localStorage.setItem(key, JSON.stringify(content));
   },
@@ -69,29 +75,65 @@ export const cartManager = {
         return {
           name: itemName,
           price: itemDetails.price,
-          quantity: itemDetails.quantity
+          quantity: itemDetails.quantity,
+          dates: itemDetails.dates
         };
       });
     }
   },
 
+  getTotalDays: function(item) {
+    const dates = item.dates;
+    let totalDays = 0;
+    if (dates) {
+      totalDays = dates.reduce((totalDays, date, index) => {
+        if (index % 2 === 0) {
+          const arrivalDate = new Date(Date.parse(date));
+          const departureDate = new Date(Date.parse(dates[index+1]));
+          const timeDiff = Math.abs(departureDate.getTime() - arrivalDate.getTime());
+          const diffDays = Math.ceil(timeDiff / (1000 * 3600 * 24));
+          return totalDays + diffDays;
+        }
+        else {
+          return totalDays;
+        }
+      }, 0);
+    }
+    return totalDays;
+  },
+
+
   getTotalPrice() {
     const cart = localStorage.getItem(key);
 
     if (cart === null) {
-      return '0.00';
+      return '0';
     }
     else {
       const content = JSON.parse(cart);
 
-      // [{ price, quantity }, { price, quantity },  { price, quantity }, ...]
       return Object
               .values(content)
               .reduce((totalPrice, item) => {
-                return totalPrice + item.price * item.quantity;
-              }, 0)
-              .toFixed(2);
+                const dates = item.dates;
+                if (dates) {
+                  const numDays = dates.reduce((totalDays, date, index) =>{
+                    if (index % 2 === 0) {
+                      const arrivalDate = new Date(date);
+                      const departureDate = new Date(dates[index+1]);
+                      const timeDiff = Math.abs(departureDate.getTime() - arrivalDate.getTime());
+                      const diffDays = Math.ceil(timeDiff / (1000 * 3600 * 24));
+                      return totalDays + diffDays;
+                }
+                else {
+                  return totalDays;
+                }
+              }, 0);
+              return totalPrice + (item.price * numDays);
+            } else {
+              return totalPrice;
+            }
+      }  , 0).toFixed(2);
     }
   }
-
-};
+}

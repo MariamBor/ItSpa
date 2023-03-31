@@ -1,4 +1,7 @@
 // RoomDetails.js
+import { cartManager } from '../cart/cart-manager';
+import datepicker from 'js-datepicker';
+
 
 export function RoomDetails(roomId) {
 
@@ -26,15 +29,36 @@ export function RoomDetails(roomId) {
             <strong>${room.price.toFixed(2)} PLN</strong>
           </p>
           </div>
-          <div class="room-photo">
-          <img src=${room.img} alt="haha">
-          <button class="btn add-to-cart">Add to cart</button>
+          <div class="room-photo-buttons">
+            <div>
+            <img src=${room.img} alt="haha">
+            </div>
+            <div class="room-buttons">
+            <input class="btn arrival-date" type="date" placeholder="Wybierz datę przyjazdu">
+            <input class="btn departure-date" type="date" placeholder="Wybierz datę wyjazdu">
+            <button class="btn add-to-cart">Dodaj do koszyka</button>
+            </div>
           </div>
           </div>
         `;
 
         const addToCartButton = details.querySelector('.add-to-cart');
-        addToCartButton.addEventListener('click', () => cartManager.addItem(room));
+        addToCartButton.addEventListener('click', () => {
+          const arrivalDateInput = details.querySelector('.arrival-date');
+          const departureDateInput = details.querySelector('.departure-date');
+          cartManager.addItem ({
+            ...room,
+            arrivalDate: arrivalDateInput.value,
+            departureDate: departureDateInput.value,
+          });
+        });
+        
+        window.addEventListener('load', () => {
+        const arrivalDateInput = details.querySelector('.arrival-date');
+        const departureDateInput = details.querySelector('.departure-date');
+        datepicker(arrivalDateInput);
+        datepicker(departureDateInput);
+      });
 
         // usuwamy element mowiacy o ladowaniu
         section.querySelector('.loading').remove();
