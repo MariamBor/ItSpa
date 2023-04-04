@@ -13,9 +13,11 @@ export function Cart() {
     <table class="table">
     <thead>
       <tr>
-        <th>Wybrany pokój</th>
+        <th>Twój wybór</th>
         <th>Ilość dni</th>
+        <th>Ilość</th>
         <th>Cena</th>
+        <th></th>
         <th></th>
       </tr>
     </thead>
@@ -38,7 +40,7 @@ export function Cart() {
 
   cartManager.getAllItems().forEach(item => {
     const tr = document.createElement('tr');
-    const itemQuantity = cartManager.getItemQuantity(item);
+    // const itemQuantity = cartManager.getItemQuantity(item);
 
     const removeItem = NavButton('🗑️', () => {
       cartManager.removeItem(item);
@@ -47,7 +49,8 @@ export function Cart() {
 
     tr.innerHTML = `
     <td>${item.name}</td>
-    <td>${cartManager.getTotalDays(item) / itemQuantity}</td>
+    <td>${cartManager.getTotalDays(item) }</td>
+    <td>${item.quantity}</td>
     <td>${item.price.toFixed(2)} PLN</td>
     <td></td>
     `;

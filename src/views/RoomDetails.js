@@ -46,6 +46,14 @@ export function RoomDetails(roomId) {
         addToCartButton.addEventListener('click', () => {
           const arrivalDateInput = details.querySelector('.arrival-date');
           const departureDateInput = details.querySelector('.departure-date');
+
+          // check if the selected arrival date is after the departure date or before the current date
+          const currentDate = new Date().toISOString().split('T')[0];
+          if (arrivalDateInput.value >= departureDateInput.value || arrivalDateInput.value < currentDate) {
+            alert('Please select a valid arrival date.');
+            return;
+          }
+
           cartManager.addItem ({
             ...room,
             arrivalDate: arrivalDateInput.value,
@@ -58,6 +66,14 @@ export function RoomDetails(roomId) {
         const departureDateInput = details.querySelector('.departure-date');
         datepicker(arrivalDateInput);
         datepicker(departureDateInput);
+
+        // set the minimum date for the departure date picker to be the selected arrival date
+        arrivalDateInput.addEventListener('change', () => {
+          const minDepartureDate = new Date(arrivalDateInput.value);
+          minDepartureDate.setDate(minDepartureDate.getDate() + 1);
+          departureDateInput.min = minDepartureDate.toISOString().split('T')[0];
+        });
+        
       });
 
         // usuwamy element mowiacy o ladowaniu

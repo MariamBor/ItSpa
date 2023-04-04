@@ -99,7 +99,7 @@ export const cartManager = {
         }
       }, 0);
     }
-    return totalDays;
+    return totalDays || 1;
   },
 
 
@@ -107,33 +107,21 @@ export const cartManager = {
     const cart = localStorage.getItem(key);
 
     if (cart === null) {
-      return '0';
+      return '0.00';
     }
     else {
       const content = JSON.parse(cart);
 
+      // [{ price, quantity }, { price, quantity },  { price, quantity }, ...]
       return Object
               .values(content)
               .reduce((totalPrice, item) => {
-                const dates = item.dates;
-                if (dates) {
-                  const numDays = dates.reduce((totalDays, date, index) =>{
-                    if (index % 2 === 0) {
-                      const arrivalDate = new Date(date);
-                      const departureDate = new Date(dates[index+1]);
-                      const timeDiff = Math.abs(departureDate.getTime() - arrivalDate.getTime());
-                      const diffDays = Math.ceil(timeDiff / (1000 * 3600 * 24));
-                      return totalDays + diffDays;
-                }
-                else {
-                  return totalDays;
-                }
-              }, 0);
-              return totalPrice + (item.price * numDays);
-            } else {
-              return totalPrice;
-            }
-      }  , 0).toFixed(2);
+                const itemTotalDays = this.getTotalDays(item);
+                return totalPrice + item.price * item.quantity * itemTotalDays;
+              }, 0)
+              .toFixed(2);
     }
   }
+
+
 }

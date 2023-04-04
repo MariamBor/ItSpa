@@ -30,14 +30,14 @@ export function RoomList() {
             <footer></footer>
           `;
 
-          const addToCartButton = document.createElement('button');
-          addToCartButton.innerText = 'Add to cart';
-          addToCartButton.classList.add('btn');
-          addToCartButton.addEventListener('click', () => cartManager.addItem(room));
+          // const addToCartButton = document.createElement('button');
+          // addToCartButton.innerText = 'Add to cart';
+          // addToCartButton.classList.add('btn');
+          // addToCartButton.addEventListener('click', () => cartManager.addItem(room));
 
           const detailsButton = NavButton('Read more...', () => RoomDetails(room.id), ['btn']);
           
-          li.querySelector('footer').append(addToCartButton, detailsButton);
+          li.querySelector('footer').append( detailsButton);
 
           return li;
         });
