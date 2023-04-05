@@ -175,6 +175,13 @@ main {
             grid-template-columns: repeat(2, 1fr);
         }
 
+        .treatment-description {
+            background: #ffffff;
+            border: 1px solid #444;
+            border-radius: 30px;
+            padding: 2rem;
+        }
+
         .add-to-cart {
             background: transparent;
             border    : 1px solid #444;
@@ -201,6 +208,32 @@ main {
         }
     }
     
+}
+
+
+section {
+    .table-cart {
+        border-collapse: collapse;
+        width: 100%;
+      }
+      
+      th, td {
+        padding: 8px;
+        text-align: left;
+        border-bottom: 1px solid #ddd;
+      }
+    // table {
+    //     position: relative;
+    //     // padding: 4rem;
+    //     background: #ffffff;
+    //     th, td {
+    //         border-bottom: 1px solid #ddd;
+    //       }
+    //     // border: 1px solid #444;
+    //     box-shadow: 0px 2px 6px rgba(0, 0, 0, 0.3);
+    //     border-radius: 30px;
+    //     font-size: 0.75rem; 
+    // } 
 }
 @media only screen and (max-width: 767px) {
     .responsive body {

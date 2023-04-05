@@ -10,7 +10,7 @@ export function TreatmentList() {
   const ul = document.createElement('ul');
   
   section.innerHTML = `
-    <h2>Treatments List</h2>
+    <h2>Lista zabiegów</h2>
     <p>Sprawdź ofertę zabiegów.</p>
     <p class="loading">Ładuję listę zabiegów...</p>
   `;
@@ -31,11 +31,11 @@ export function TreatmentList() {
           `;
 
           const addToCartButton = document.createElement('button');
-          addToCartButton.innerText = 'Add to cart';
+          addToCartButton.innerText = 'Dodaj do koszyka';
           addToCartButton.classList.add('btn');
           addToCartButton.addEventListener('click', () => cartManager.addItem(treatment));
 
-          const detailsButton = NavButton('Read more...', () => TreatmentDetails(treatment.id), ['btn']);
+          const detailsButton = NavButton('Dowiedz się więcej...', () => TreatmentDetails(treatment.id), ['btn']);
           
           li.querySelector('footer').append(addToCartButton, detailsButton);
 

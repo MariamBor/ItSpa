@@ -35,7 +35,7 @@ export function RoomList() {
           // addToCartButton.classList.add('btn');
           // addToCartButton.addEventListener('click', () => cartManager.addItem(room));
 
-          const detailsButton = NavButton('Read more...', () => RoomDetails(room.id), ['btn']);
+          const detailsButton = NavButton('Dowiedz się więcej...', () => RoomDetails(room.id), ['btn']);
           
           li.querySelector('footer').append( detailsButton);
 

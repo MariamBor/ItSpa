@@ -16,6 +16,7 @@ const navItems = [
 
 
 const cartButton = NavButton('<i class="fa fa-cart-shopping"></i>', Cart, ['btn', 'btn-cart'], true);
+
 cartButton.addEventListener('mouseenter', () => {
   const cartStatus = document.createElement('div');
   cartStatus.innerHTML = `Stan Twojego koszyka: ${cartManager.getTotalPrice()} PLN`;

@@ -16,12 +16,15 @@ export function TreatmentDetails(treatmentId) {
           const details = document.createElement('article');
   
           details.innerHTML = `
+          <div class="treatment-description">
             <h3>${treatment.name}</h3>
             <p>Obszar: ${treatment.area}</p>
             <p>Czas trwania: ${treatment.time}</p>
             <p>
               <strong>${treatment.price.toFixed(2)} PLN</strong>
             </p>
+            <button class="btn add-to-cart">Dodaj do koszyka</button>
+          </div>
           `;
   
           // usuwamy element mowiacy o ladowaniu

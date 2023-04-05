@@ -103,6 +103,44 @@ export const cartManager = {
   },
 
 
+  // getTotalPrice() {
+  //   const cart = localStorage.getItem(key);
+
+  //   if (cart === null) {
+  //     return '0.00';
+  //   }
+  //   else {
+  //     const content = JSON.parse(cart);
+
+  //     // [{ price, quantity }, { price, quantity },  { price, quantity }, ...]
+  //     return Object
+  //             .values(content)
+  //             .reduce((totalPrice, item) => {
+  //               const itemTotalDays = this.getTotalDays(item);
+  //               return totalPrice + item.price * item.quantity * itemTotalDays;
+  //             }, 0)
+  //             .toFixed(2);
+  //   }
+  // }
+  getItemPrice() {
+    const cart = localStorage.getItem(key);
+
+    if (cart === null) {
+      return '0.00';
+    }
+    else {
+      const content = JSON.parse(cart);
+
+      return Object
+            .values(content)
+            .reduce((itemPrice, item) => {
+              const itemTotalDays = this.getTotalDays(item);
+              return itemPrice + item.price * item.quantity * itemTotalDays;
+            }, 0)
+            // .toFixed(2);
+    }
+  },
+  
   getTotalPrice() {
     const cart = localStorage.getItem(key);
 
@@ -116,12 +154,13 @@ export const cartManager = {
       return Object
               .values(content)
               .reduce((totalPrice, item) => {
-                const itemTotalDays = this.getTotalDays(item);
-                return totalPrice + item.price * item.quantity * itemTotalDays;
+                const itemPrice = this.getItemPrice(item);
+                return totalPrice + itemPrice;
               }, 0)
               .toFixed(2);
     }
   }
 
+ 
 
 }
