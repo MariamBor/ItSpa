@@ -28,17 +28,15 @@ export function RoomDetails(roomId) {
           <p>
             <strong>${room.price.toFixed(2)} PLN</strong>
           </p>
-          </div>
-          <div class="room-photo-buttons">
-            <div>
-            <img src=${room.img} alt="haha">
-            </div>
-            <div class="room-buttons">
+          <div class="room-buttons">
+          <div class="date-buttons">
             <input class="btn arrival-date" type="date" placeholder="Wybierz datę przyjazdu">
             <input class="btn departure-date" type="date" placeholder="Wybierz datę wyjazdu">
+            </div>
             <button class="btn add-to-cart">Dodaj do koszyka</button>
             </div>
           </div>
+          
           </div>
         `;
 
