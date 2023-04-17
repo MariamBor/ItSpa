@@ -19,9 +19,30 @@ const cartButton = NavButton('<i class="fa fa-cart-shopping"></i>', Cart, ['btn'
 
 cartButton.addEventListener('mouseenter', () => {
   const cartStatus = document.createElement('div');
-  cartStatus.innerHTML = `Stan Twojego koszyka: ${cartManager.getTotalPrice()} PLN`;
-  
   cartStatus.classList.add('cart-status');
+
+  const cartItems = cartManager.getAllItems();
+
+  if (cartItems.length > 0) {
+    const itemsList = document.createElement('ul');
+
+    for (const item of cartItems) {
+      const listItem = document.createElement('li');
+      listItem.textContent = `${item.quantity} x ${item.name} - ${item.price.toFixed(2)} PLN`;
+      itemsList.appendChild(listItem);
+    }
+
+    cartStatus.appendChild(itemsList);
+  } else {
+    const emptyMessage = document.createElement('p');
+    emptyMessage.textContent = 'Twój koszyk jest pusty.';
+    cartStatus.appendChild(emptyMessage);
+  }
+
+  const totalPrice = document.createElement('p');
+  totalPrice.textContent = `Total = ${cartManager.getTotalPrice()} PLN`;
+  cartStatus.appendChild(totalPrice);
+
   cartButton.appendChild(cartStatus);
 });
 
