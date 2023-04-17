@@ -6,21 +6,37 @@ html {
     position: relative;
     background: #f6f6f6;
     font-family: 'Inter', 'Poppins', 'Arial', sans-serif;
-
 }
+
 body {
     height : 100%;
     position: relative;
     background : #f6f6f6;
     font-family: 'Inter', 'Poppins', 'Arial', sans-serif;
-    padding: 2rem;
     margin: 0;
+    box-sizing: border-box;
+
+    .footer {
+        position: relative;
+        margin-top: 20px;
+        bottom: 0;
+        left: 0;
+        width: 100vw;
+        background-color: #0a8c6e;
+        padding: 10px;
+        text-align: center;
+        color: #444;
+      }
+
 }
 
 
 
 
+
 nav {
+
+    padding: 1.5rem;
 
     button,
     .btn {
@@ -37,22 +53,27 @@ nav {
         &:hover {
             background: #d1e9e4;
         }
+        
     }
     .btn-cart {
         position: absolute;
+        margin-right: 0;
         top: 2rem;
         right: 2rem;
         &:active,
         &:focus,
         &:hover {
-            background: transparent;
+            z-index: 10000;
+            top: 2rem;
+            right:2rem;
+            height: hug;
+            background: #d1e9e4;
+            border-radius: 30px;
+            ul {
+                list-style: none;
+            }
         }
     }
-
-    // .btn.btn-active {
-    //     background-color: #f4b700;
-    //     text-decoration : underline;
-    // }
 }
 
 main {
@@ -68,41 +89,6 @@ main {
         font-family: 'Inter';
         font-weight: 700;
     }
-
-
-    .image-container {
-        width: 100vw;
-        height: 50vw;
-        position: relative;
-        // justify-content: space-evenly;
-        align-items: stretch;
-        display: flex;
-        overflow: hidden;
-        // grid-template-columns: repeat(4, 1fr);
-    }
-
-    .image-container-inner {
-        display: flex;
-        width: 100vw;
-        animation: slide 15s linear infinite;
-    }
-
-    .image-container-inner img {
-        height: 100%;
-        object-fit: cover;
-    }
-
-    @keyframes slide {
-        0% {
-            transform: translateX(0%);
-        }
-        100% {
-            transform: translateX(-100%);
-        }
-    }
-    
-   
-    
 
     p {
         margin: 1rem 0;
@@ -128,6 +114,7 @@ main {
                     margin-left: 1rem;
                 }
             }
+            
 
             button,
             .btn {
@@ -214,6 +201,57 @@ main {
 
 
 section {
+
+    
+    .hero-container {
+        position: relative;
+        display: inline-block;
+        margin-top: 20px;
+        width: 100vw;
+    }
+    .hero-photo {
+        display: block;
+        width: 100vw;
+        height: auto;
+    }
+    .hero-header {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        color: white;
+        text-align: center;
+        text-shadow: black;
+        font-size: 4rem;
+    }
+
+    .home-text {
+        padding: 1.5rem;
+        font-size: large;
+        font-weight: 600;
+        color: #444;
+        width: 50vw;
+        text-align: center;
+        justify-content: center;
+    }
+
+    .photo-container {
+        display: flex;
+        justify-content:center;
+        padding: 1.5rem;
+    }
+
+    .photos {
+        height: 50vh;
+        transition: transform 0.3s ease;
+        margin: 10px;
+        width: auto;
+        max-width: 25vw;
+    }
+    .photos:hover {
+        transform: scale(1.1);
+      }
+    
     .table-cart {
         border-collapse: collapse;
         width: 100%;
@@ -224,29 +262,5 @@ section {
         text-align: left;
         border-bottom: 1px solid #ddd;
       }
-    // table {
-    //     position: relative;
-    //     // padding: 4rem;
-    //     background: #ffffff;
-    //     th, td {
-    //         border-bottom: 1px solid #ddd;
-    //       }
-    //     // border: 1px solid #444;
-    //     box-shadow: 0px 2px 6px rgba(0, 0, 0, 0.3);
-    //     border-radius: 30px;
-    //     font-size: 0.75rem; 
-    // } 
 }
-@media only screen and (max-width: 767px) {
-    .responsive body {
-        background-color: #1d1a13;
-    }
-    .image-container {
-      height: 50vw;
-      width: 100%;
-    }
-    .image-container-inner {
-        height: 50vw;
-        width: 400%;
-    }
-  }
+

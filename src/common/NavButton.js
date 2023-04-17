@@ -4,7 +4,6 @@ export function NavButton(text, componentFn, classes = [], useInnerHTML = false)
   const button = document.createElement('button');
   button.setAttribute('type', 'button');
   button.classList.add('btn');
-  // button.innerText = text;
   button.classList.add(...classes);
 
   if (useInnerHTML) {
