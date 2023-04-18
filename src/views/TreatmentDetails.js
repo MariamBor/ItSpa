@@ -1,21 +1,20 @@
 // TreatmentsDetails.js
 
 export function TreatmentDetails(treatmentId) {
+  const section = document.createElement("section");
 
-    const section = document.createElement('section');
-    
-    section.innerHTML = `
+  section.innerHTML = `
       <h2>Treatment</h2>
       <p class="loading">Ładuję zabieg...</p>
     `;
-  
-    // pobieramy wybrany pokoj z serwera
-    fetch(`http://localhost:3000/treatments/${treatmentId}`)
-      .then(response => response.json())
-      .then(treatment => {
-          const details = document.createElement('article');
-  
-          details.innerHTML = `
+
+  // pobieramy wybrany pokoj z serwera
+  fetch(`http://localhost:3000/treatments/${treatmentId}`)
+    .then((response) => response.json())
+    .then((treatment) => {
+      const details = document.createElement("article");
+
+      details.innerHTML = `
           <div class="treatment-description">
             <h3>${treatment.name}</h3>
             <p>Obszar: ${treatment.area}</p>
@@ -26,13 +25,12 @@ export function TreatmentDetails(treatmentId) {
             <button class="btn add-to-cart">Dodaj do koszyka</button>
           </div>
           `;
-  
-          // usuwamy element mowiacy o ladowaniu
-          section.querySelector('.loading').remove();
-          // podstawiamy gotowa liste z pokojami
-          section.append(details);
-      });
-  
-    return section;
-  }
-  
+
+      // usuwamy element mowiacy o ladowaniu
+      section.querySelector(".loading").remove();
+      // podstawiamy gotowa liste z pokojami
+      section.append(details);
+    });
+
+  return section;
+}

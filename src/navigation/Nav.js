@@ -58,13 +58,45 @@ cartButton.addEventListener('mouseleave', () => {
 export function Nav() {
   const nav = document.createElement('nav');
 
+  const menu = document.createElement('div');
+  menu.classList.add('menu');
+
   const navButtons = navItems.map(navItem => {
     return NavButton(navItem.name, navItem.component, ['btn']);
   });
 
-  navButtons.push(cartButton);
+  const cartButtonElement = cartButton;
+  cartButtonElement.classList.add('btn-cart');
 
-  nav.append(...navButtons);
+  const hamburger = document.createElement('i');
+  hamburger.classList.add('hamburger', 'fas', 'fa-bars');
+
+
+  const toggleNav = () => {
+    menu.classList.toggle('active');
+    hamburger.classList.toggle('active');
+  };
+
+  hamburger.addEventListener('click', toggleNav);
+
+  const resizeHandler = () => {
+    if (window.innerWidth > 768) {
+      nav.classList.remove('active');
+      hamburger.classList.remove('active');
+    } else {
+      if(!menu.classList.contains('active')) {
+      hamburger.classList.add('active');
+      }
+    }
+  };
+
+  window.addEventListener('resize', resizeHandler);
+
+  nav.appendChild(hamburger);
+  navButtons.forEach(button => menu.appendChild(button));
+  nav.appendChild(menu);
+  nav.appendChild(cartButtonElement);
+  
 
   return nav;
 }

@@ -1,38 +1,56 @@
 // cart-manager.js
 
-const key = 'it-spa-cart';
+const key = "it-spa-cart";
 
 export const cartManager = {
-
   addItem(item) {
     const cart = localStorage.getItem(key);
     let content;
 
     if (cart === null) {
       content = {
-        [item.name]: { price: item.price, quantity: 1, dates: [{arrivalDate: item.arrivalDate, departureDate: item.departureDate}] }
+        [item.name]: {
+          price: item.price,
+          quantity: 1,
+          dates: [
+            {
+              arrivalDate: item.arrivalDate,
+              departureDate: item.departureDate,
+            },
+          ],
+        },
       };
-    }
-    else {
+    } else {
       content = JSON.parse(cart);
-      
+
       if (item.name in content) {
         content[item.name].quantity += 1;
-        content[item.name].dates = content[item.name].dates.concat({arrivalDate: item.arrivalDate, departureDate: item.departureDate});
-      }
-      else {
+        content[item.name].dates = content[item.name].dates.concat({
+          arrivalDate: item.arrivalDate,
+          departureDate: item.departureDate,
+        });
+      } else {
         const newItem = {
-          [item.name]: { price: item.price, quantity: 1, dates: [{arrivalDate: item.arrivalDate, departureDate: item.departureDate}] }
+          [item.name]: {
+            price: item.price,
+            quantity: 1,
+            dates: [
+              {
+                arrivalDate: item.arrivalDate,
+                departureDate: item.departureDate,
+              },
+            ],
+          },
         };
 
         if (content) {
-        Object.assign(content, newItem);
-      } else {
-        content = newItem;
+          Object.assign(content, newItem);
+        } else {
+          content = newItem;
+        }
       }
     }
-  }
-    
+
     localStorage.setItem(key, JSON.stringify(content));
   },
 
@@ -45,8 +63,7 @@ export const cartManager = {
       if (item.name in content) {
         if (content[item.name].quantity > 1) {
           content[item.name].quantity -= 1;
-        }
-        else {
+        } else {
           delete content[item.name];
         }
       }
@@ -60,73 +77,67 @@ export const cartManager = {
 
     if (cart === null) {
       return [];
-    }
-    else {
+    } else {
       const content = JSON.parse(cart);
 
       // entry to jest [KLUCZ, WARTOSC]
-      return Object.entries(content).map(entry => {
+      return Object.entries(content).map((entry) => {
         const [itemName, itemDetails] = entry;
 
         return {
           name: itemName,
           price: itemDetails.price,
           quantity: itemDetails.quantity,
-          dates: itemDetails.dates
+          dates: itemDetails.dates,
         };
       });
     }
   },
 
-  getTotalDays: function(item) {
+  getTotalDays: function (item) {
     const dates = item.dates;
     let totalDays = 0;
     if (dates) {
       totalDays = dates.reduce((totalDays, dateRange) => {
-        
-          const arrivalDate = new Date(dateRange.arrivalDate);
-          const departureDate = new Date(dateRange.departureDate);
-          const timeDiff = Math.abs(departureDate.getTime() - arrivalDate.getTime());
-          const diffDays = Math.ceil(timeDiff / (1000 * 3600 * 24));
-          return totalDays + diffDays;
-             
+        const arrivalDate = new Date(dateRange.arrivalDate);
+        const departureDate = new Date(dateRange.departureDate);
+        const timeDiff = Math.abs(
+          departureDate.getTime() - arrivalDate.getTime()
+        );
+        const diffDays = Math.ceil(timeDiff / (1000 * 3600 * 24));
+        return totalDays + diffDays;
       }, 0);
     }
     return totalDays || 1;
   },
 
   getItemPrice(item) {
-    const itemTotalDays = this.getTotalDays(item)
+    const itemTotalDays = this.getTotalDays(item);
     return item.price * itemTotalDays;
   },
-  
+
   getTotalPrice() {
     const cart = localStorage.getItem(key);
 
     if (cart === null) {
-      return '0.00';
-    }
-    else {
+      return "0.00";
+    } else {
       const content = JSON.parse(cart);
 
-      return Object
-              .values(content)
-              .reduce((totalPrice, item) => {
-               const itemTotalPrice = item.dates.reduce((sum, dateRange) => {
-                const singleItem = {
-                  ...item,
-                  dates: [dateRange],
-                };
-                const priceForDateRange = this.getItemPrice(singleItem);
-                return sum + priceForDateRange;
-               }, 0);
-                
-                return totalPrice + itemTotalPrice;
-              }, 0)
-              .toFixed(2);
+      return Object.values(content)
+        .reduce((totalPrice, item) => {
+          const itemTotalPrice = item.dates.reduce((sum, dateRange) => {
+            const singleItem = {
+              ...item,
+              dates: [dateRange],
+            };
+            const priceForDateRange = this.getItemPrice(singleItem);
+            return sum + priceForDateRange;
+          }, 0);
+
+          return totalPrice + itemTotalPrice;
+        }, 0)
+        .toFixed(2);
     }
-  }
-
- 
-
-}
+  },
+};

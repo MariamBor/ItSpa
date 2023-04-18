@@ -1,14 +1,13 @@
 // RoomList.js
 
-import { RoomDetails } from './RoomDetails';
-import { NavButton } from '../common/NavButton';
-import { cartManager } from '../cart/cart-manager';
+import { RoomDetails } from "./RoomDetails";
+import { NavButton } from "../common/NavButton";
+import { cartManager } from "../cart/cart-manager";
 
 export function RoomList() {
+  const section = document.createElement("section");
+  const ul = document.createElement("ul");
 
-  const section = document.createElement('section');
-  const ul = document.createElement('ul');
-  
   section.innerHTML = `
     <h2>Lista pokoi</h2>
     <p>Sprawdź ofertę pokoi.</p>
@@ -16,13 +15,13 @@ export function RoomList() {
   `;
 
   // pobieramy liste pokoi z serwera
-  fetch('http://localhost:3000/rooms')
-    .then(response => response.json())
-    .then(rooms => {
-        const lis = rooms.map(room => {
-          const li = document.createElement('li');
+  fetch("http://localhost:3000/rooms")
+    .then((response) => response.json())
+    .then((rooms) => {
+      const lis = rooms.map((room) => {
+        const li = document.createElement("li");
 
-          li.innerHTML = `
+        li.innerHTML = `
             <h4>${room.name}</h4>
             <p>
               <strong>${room.price.toFixed(2)} PLN</strong>
@@ -30,24 +29,23 @@ export function RoomList() {
             <footer></footer>
           `;
 
-          // const addToCartButton = document.createElement('button');
-          // addToCartButton.innerText = 'Add to cart';
-          // addToCartButton.classList.add('btn');
-          // addToCartButton.addEventListener('click', () => cartManager.addItem(room));
+        const detailsButton = NavButton(
+          "Dowiedz się więcej...",
+          () => RoomDetails(room.id),
+          ["btn"]
+        );
 
-          const detailsButton = NavButton('Dowiedz się więcej...', () => RoomDetails(room.id), ['btn']);
-          
-          li.querySelector('footer').append( detailsButton);
+        li.querySelector("footer").append(detailsButton);
 
-          return li;
-        });
+        return li;
+      });
 
-        ul.append(...lis);
+      ul.append(...lis);
 
-        // usuwamy element mowiacy o ladowaniu
-        section.querySelector('.loading').remove();
-        // podstawiamy gotowa liste z pokojami
-        section.append(ul);
+      // usuwamy element mowiacy o ladowaniu
+      section.querySelector(".loading").remove();
+      // podstawiamy gotowa liste z pokojami
+      section.append(ul);
     });
 
   return section;
