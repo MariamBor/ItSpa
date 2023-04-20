@@ -1,4 +1,6 @@
 // TreatmentsDetails.js
+import { NavButton } from "../common/NavButton";
+import { cartManager } from "../cart/cart-manager";
 
 export function TreatmentDetails(treatmentId) {
   const section = document.createElement("section");
@@ -22,9 +24,17 @@ export function TreatmentDetails(treatmentId) {
             <p>
               <strong>${treatment.price.toFixed(2)} PLN</strong>
             </p>
-            <button class="btn add-to-cart">Dodaj do koszyka</button>
           </div>
           `;
+
+          const addToCartButton = document.createElement("button");
+          addToCartButton.innerText = "Dodaj do koszyka";
+          addToCartButton.classList.add("btn");
+          addToCartButton.addEventListener("click", () =>
+            cartManager.addItem(treatment)
+          );
+          details.querySelector(".treatment-description").append(addToCartButton);
+
 
       // usuwamy element mowiacy o ladowaniu
       section.querySelector(".loading").remove();
